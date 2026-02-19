@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Viktig info</title>
+  <title>RICKEDYROLL</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
@@ -29,14 +29,11 @@
       position: relative;
     }
 
-    /* Spinning disco ball rays */
     body::before {
       content: '';
       position: fixed;
-      top: -50vh;
-      left: 50%;
-      width: 4px;
-      height: 200vh;
+      top: -50vh; left: 50%;
+      width: 4px; height: 200vh;
       background: linear-gradient(transparent 0%, rgba(245,197,24,0.15) 40%, rgba(245,197,24,0.4) 50%, rgba(245,197,24,0.15) 60%, transparent 100%);
       transform-origin: 50% 100%;
       animation: rays 3s linear infinite;
@@ -46,10 +43,8 @@
     body::after {
       content: '';
       position: fixed;
-      top: -50vh;
-      left: 50%;
-      width: 4px;
-      height: 200vh;
+      top: -50vh; left: 50%;
+      width: 4px; height: 200vh;
       background: linear-gradient(transparent 0%, rgba(224,57,158,0.2) 40%, rgba(224,57,158,0.5) 50%, rgba(224,57,158,0.2) 60%, transparent 100%);
       transform-origin: 50% 100%;
       animation: rays 3s linear infinite reverse;
@@ -62,13 +57,9 @@
       to   { transform: rotate(360deg); }
     }
 
-    /* Floating sparkles */
-    .sparkles {
-      position: fixed; inset: 0; pointer-events: none; overflow: hidden;
-    }
+    .sparkles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
     .sparkle {
       position: absolute;
-      width: 6px; height: 6px;
       border-radius: 50%;
       animation: floatUp linear infinite;
       opacity: 0;
@@ -80,40 +71,44 @@
       100% { transform: translateY(-10vh) scale(1); opacity: 0; }
     }
 
-    /* Disco ball */
-    .discoball-wrap {
+    .face-wrap {
       text-align: center;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
-    .discoball {
-      font-size: 64px;
+    .face-ring {
       display: inline-block;
-      animation: spin 2s linear infinite;
-      filter: drop-shadow(0 0 16px var(--gold));
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(90deg, var(--gold), var(--pink), var(--purple), var(--orange), var(--gold));
+      background-size: 300% 100%;
+      animation: gradShift 2s linear infinite, faceSpin 3s ease-in-out infinite;
+      box-shadow: 0 0 30px rgba(245,197,24,0.6), 0 0 60px rgba(224,57,158,0.4);
     }
-    @keyframes spin {
-      from { transform: rotate(-10deg); }
-      50%  { transform: rotate(10deg); }
-      to   { transform: rotate(-10deg); }
+    @keyframes faceSpin {
+      0%   { transform: rotate(-15deg) scale(1); }
+      25%  { transform: rotate(15deg) scale(1.08); }
+      50%  { transform: rotate(-10deg) scale(1); }
+      75%  { transform: rotate(20deg) scale(1.05); }
+      100% { transform: rotate(-15deg) scale(1); }
+    }
+    .face-img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
     .card {
       max-width: 720px;
       width: 100%;
       background: linear-gradient(145deg, #2d0050, #1a0030);
-      border: 3px solid transparent;
       border-radius: 24px;
       padding: 36px 32px;
       position: relative;
-      box-shadow: 0 0 40px rgba(245,197,24,0.3), 0 0 80px rgba(123,45,139,0.4);
       animation: borderGlow 2s ease-in-out infinite alternate;
     }
-    @keyframes borderGlow {
-      from { box-shadow: 0 0 30px rgba(245,197,24,0.3), 0 0 60px rgba(123,45,139,0.3); }
-      to   { box-shadow: 0 0 60px rgba(224,57,158,0.5), 0 0 100px rgba(245,197,24,0.3); }
-    }
-
-    /* Groovy border via pseudo */
     .card::before {
       content: '';
       position: absolute; inset: -3px;
@@ -127,6 +122,10 @@
       from { background-position: 0% 50%; }
       to   { background-position: 300% 50%; }
     }
+    @keyframes borderGlow {
+      from { box-shadow: 0 0 30px rgba(245,197,24,0.3), 0 0 60px rgba(123,45,139,0.3); }
+      to   { box-shadow: 0 0 60px rgba(224,57,158,0.5), 0 0 100px rgba(245,197,24,0.3); }
+    }
 
     h1 {
       font-size: 30px;
@@ -139,45 +138,37 @@
     }
     @keyframes flicker {
       0%,100% { opacity: 1; }
-      92%      { opacity: 1; }
-      93%      { opacity: 0.5; }
-      94%      { opacity: 1; }
-      96%      { opacity: 0.7; }
-      97%      { opacity: 1; }
+      92% { opacity: 1; } 93% { opacity: 0.4; } 94% { opacity: 1; } 96% { opacity: 0.6; } 97% { opacity: 1; }
     }
 
     p {
-      font-size: 18px;
+      font-size: 20px;
       color: var(--cream);
       line-height: 1.5;
       margin-bottom: 20px;
       text-shadow: 0 0 8px rgba(245,197,24,0.3);
     }
 
-    button {
-      padding: 12px 28px;
+    #colorBtn {
+      padding: 14px 32px;
       border-radius: 50px;
       border: none;
       background: linear-gradient(135deg, var(--gold), var(--orange));
       color: #1a0030;
       font-family: 'Righteous', sans-serif;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 17px;
       cursor: pointer;
       letter-spacing: 1px;
       text-transform: uppercase;
       box-shadow: 0 0 20px rgba(245,197,24,0.5);
-      transition: transform 0.15s, box-shadow 0.15s;
-      margin-bottom: 16px;
-      animation: pulse 1.8s ease-in-out infinite;
+      transition: transform 0.15s;
+      margin-bottom: 18px;
+      animation: btnPulse 1.8s ease-in-out infinite;
     }
-    button:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 35px rgba(245,197,24,0.9);
-    }
-    @keyframes pulse {
+    #colorBtn:hover { transform: scale(1.1); }
+    @keyframes btnPulse {
       0%,100% { box-shadow: 0 0 20px rgba(245,197,24,0.5); }
-      50%      { box-shadow: 0 0 40px rgba(224,57,158,0.8); }
+      50%      { box-shadow: 0 0 45px rgba(224,57,158,0.9); }
     }
 
     .video {
@@ -187,6 +178,7 @@
       overflow: hidden;
       border: 3px solid var(--gold);
       box-shadow: 0 0 30px rgba(245,197,24,0.4);
+      transition: border-color 0.4s;
     }
     iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
@@ -199,13 +191,11 @@
       opacity: 0.85;
     }
 
-    /* Groovy stripes bottom decoration */
     .stripes {
       margin-top: 24px;
       height: 8px;
       border-radius: 4px;
-      background: repeating-linear-gradient(
-        90deg,
+      background: repeating-linear-gradient(90deg,
         var(--gold) 0px, var(--gold) 16px,
         var(--orange) 16px, var(--orange) 32px,
         var(--pink) 32px, var(--pink) 48px,
@@ -218,53 +208,126 @@
       from { background-position: 0 0; }
       to   { background-position: 100% 0; }
     }
+
+    #flash {
+      position: fixed; inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.1s;
+      z-index: 999;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Floating sparkles -->
-  <div class="sparkles" id="sparkles"></div>
+<div class="sparkles" id="sparkles"></div>
+<div id="flash"></div>
 
-  <div class="card">
-    <div class="discoball-wrap">
-      <span class="discoball">🪩</span>
+<div class="card">
+  <div class="face-wrap">
+    <div class="face-ring">
+      <!-- Lägg en bild i repots root som heter matte.jpg (eller matte.png) -->
+      <img
+        id="faceImg"
+        class="face-img"
+        src="matte.jpg"
+        alt="face"
+        onerror="this.onerror=null; this.src='matte.png';"
+      />
     </div>
-    <h1>⚠️ VIKTIGT MEDDELANDE</h1>
-    <p>Säg till om du också fått detta fel. Jag tror vi behöver åtgärda det direkt.</p>
-    <div>
-      <button id="playBtn">🎵 Starta videon</button>
-    </div>
-    <div class="video">
-      <iframe
-        id="player"
-        src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=1&playsinline=1"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-    </div>
-    <div class="hint">Om den inte startar automatiskt: tryck på "Starta videon" 🕺</div>
-    <div class="stripes"></div>
   </div>
 
-  <script>
-    document.getElementById("playBtn").addEventListener("click", () => {
-      const iframe = document.getElementById("player");
-      iframe.src = "https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=0&playsinline=1";
-    });
+  <h1>🪩 RICKEDYROLL!</h1>
+  <p>NU TA EN SHOT!! 🥃🔥</p>
 
-    // Generate sparkles
-    const container = document.getElementById('sparkles');
-    const colors = ['#f5c518','#e8630a','#e0399e','#7b2d8b','#fff','#a8edea'];
-    for (let i = 0; i < 40; i++) {
+  <div>
+    <button id="colorBtn">TRYCK PÅ MIG!</button>
+  </div>
+
+  <div class="video" id="videoBox">
+    <iframe
+      id="player"
+      src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=1&playsinline=1"
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+  <div class="hint">🕺 Skål! 🕺</div>
+  <div class="stripes"></div>
+</div>
+
+<script>
+  // Color palettes
+  const palettes = [
+    { bg: '#1a0030', a: '#f5c518', b: '#e8630a', c: '#e0399e', btn: 'linear-gradient(135deg,#f5c518,#e8630a)', flash: 'rgba(245,197,24,0.3)' },
+    { bg: '#003020', a: '#00ff99', b: '#00c853', c: '#b2ff59', btn: 'linear-gradient(135deg,#00ff99,#00c853)', flash: 'rgba(0,255,100,0.3)' },
+    { bg: '#001a40', a: '#00cfff', b: '#0077ff', c: '#a64dff', btn: 'linear-gradient(135deg,#00cfff,#0077ff)', flash: 'rgba(0,180,255,0.3)' },
+    { bg: '#3a0010', a: '#ff2d55', b: '#ff6b00', c: '#ffcc00', btn: 'linear-gradient(135deg,#ff2d55,#ff6b00)', flash: 'rgba(255,50,80,0.35)' },
+    { bg: '#1a1a00', a: '#ffe600', b: '#ff9900', c: '#ff00cc', btn: 'linear-gradient(135deg,#ffe600,#ff9900)', flash: 'rgba(255,200,0,0.35)' },
+  ];
+  let pi = 0;
+
+  // 🔊 Slå på ljud bara första gången man trycker
+  let soundOn = false;
+  const iframe = document.getElementById('player');
+
+  document.getElementById('colorBtn').addEventListener('click', () => {
+    pi = (pi + 1) % palettes.length;
+    const p = palettes[pi];
+
+    // Färger
+    document.body.style.background = p.bg;
+    document.documentElement.style.setProperty('--gold', p.a);
+    document.documentElement.style.setProperty('--orange', p.b);
+    document.documentElement.style.setProperty('--pink', p.c);
+    document.getElementById('colorBtn').style.background = p.btn;
+
+    // Flash!
+    const fl = document.getElementById('flash');
+    fl.style.background = p.flash;
+    fl.style.opacity = '1';
+    setTimeout(() => fl.style.opacity = '0', 120);
+
+    // Burst sparkles
+    spawnBurst(p.a, p.c);
+
+    // 🔊 Starta med ljud (pålitligt) på första klicket
+    if (!soundOn) {
+      soundOn = true;
+      iframe.src = "https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=0&playsinline=1";
+      // Om du vill ändra knapptext efter att ljudet är på:
+      // document.getElementById('colorBtn').textContent = "FÄRGBOMB!";
+    }
+  });
+
+  // Sparkles
+  const container = document.getElementById('sparkles');
+  const colors = ['#f5c518','#e8630a','#e0399e','#7b2d8b','#fff','#a8edea'];
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('div');
+    s.className = 'sparkle';
+    s.style.left = Math.random() * 100 + 'vw';
+    s.style.width = s.style.height = (Math.random() * 6 + 3) + 'px';
+    s.style.background = colors[Math.floor(Math.random() * colors.length)];
+    s.style.animationDuration = (Math.random() * 6 + 4) + 's';
+    s.style.animationDelay = (Math.random() * 8) + 's';
+    container.appendChild(s);
+  }
+
+  function spawnBurst(c1, c2) {
+    for (let i = 0; i < 20; i++) {
       const s = document.createElement('div');
       s.className = 'sparkle';
       s.style.left = Math.random() * 100 + 'vw';
-      s.style.width = s.style.height = (Math.random() * 6 + 3) + 'px';
-      s.style.background = colors[Math.floor(Math.random() * colors.length)];
-      s.style.animationDuration = (Math.random() * 6 + 4) + 's';
-      s.style.animationDelay = (Math.random() * 8) + 's';
+      s.style.width = s.style.height = (Math.random() * 10 + 5) + 'px';
+      s.style.background = Math.random() > 0.5 ? c1 : c2;
+      s.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+      s.style.animationDelay = '0s';
       container.appendChild(s);
+      setTimeout(() => s.remove(), 3500);
     }
-  </script>
+  }
+</script>
 </body>
 </html>
