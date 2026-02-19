@@ -6,85 +6,78 @@
   <title>RICKEDYROLL</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
-
     :root {
-      --gold: #f5c518;
-      --orange: #e8630a;
-      --pink: #e0399e;
-      --purple: #7b2d8b;
-      --cream: #fdf3dc;
+      --gold: #f5c518; --orange: #e8630a; --pink: #e0399e;
+      --purple: #7b2d8b; --cream: #fdf3dc;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Righteous', system-ui, sans-serif;
       background: #1a0030;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      overflow: hidden;
-      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px; overflow: hidden; position: relative;
     }
-
     body::before {
-      content: '';
-      position: fixed;
-      top: -50vh; left: 50%;
+      content: ''; position: fixed; top: -50vh; left: 50%;
       width: 4px; height: 200vh;
       background: linear-gradient(transparent 0%, rgba(245,197,24,0.15) 40%, rgba(245,197,24,0.4) 50%, rgba(245,197,24,0.15) 60%, transparent 100%);
-      transform-origin: 50% 100%;
-      animation: rays 3s linear infinite;
-      pointer-events: none;
-      filter: blur(2px);
+      transform-origin: 50% 100%; animation: rays 3s linear infinite;
+      pointer-events: none; filter: blur(2px);
     }
     body::after {
-      content: '';
-      position: fixed;
-      top: -50vh; left: 50%;
+      content: ''; position: fixed; top: -50vh; left: 50%;
       width: 4px; height: 200vh;
       background: linear-gradient(transparent 0%, rgba(224,57,158,0.2) 40%, rgba(224,57,158,0.5) 50%, rgba(224,57,158,0.2) 60%, transparent 100%);
-      transform-origin: 50% 100%;
-      animation: rays 3s linear infinite reverse;
-      animation-delay: -1.5s;
-      pointer-events: none;
-      filter: blur(3px);
+      transform-origin: 50% 100%; animation: rays 3s linear infinite reverse;
+      animation-delay: -1.5s; pointer-events: none; filter: blur(3px);
     }
-    @keyframes rays {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
+    @keyframes rays { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 
     .sparkles { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
-    .sparkle {
-      position: absolute;
-      border-radius: 50%;
-      animation: floatUp linear infinite;
-      opacity: 0;
-    }
+    .sparkle { position: absolute; border-radius: 50%; animation: floatUp linear infinite; opacity: 0; }
     @keyframes floatUp {
       0%   { transform: translateY(100vh) scale(0); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 1; }
+      10%  { opacity: 1; } 90% { opacity: 1; }
       100% { transform: translateY(-10vh) scale(1); opacity: 0; }
     }
 
-    .face-wrap {
-      text-align: center;
-      margin-bottom: 8px;
+    .card {
+      max-width: 720px; width: 100%;
+      background: linear-gradient(145deg, #2d0050, #1a0030);
+      border-radius: 24px; padding: 36px 32px;
+      position: relative;
+      animation: borderGlow 2s ease-in-out infinite alternate;
+    }
+    .card::before {
+      content: ''; position: absolute; inset: -3px; border-radius: 26px;
+      background: linear-gradient(90deg, var(--gold), var(--pink), var(--purple), var(--orange), var(--gold));
+      background-size: 300% 100%;
+      animation: gradShift 3s linear infinite; z-index: -1;
+    }
+    @keyframes gradShift { from{background-position:0% 50%} to{background-position:300% 50%} }
+    @keyframes borderGlow {
+      from { box-shadow: 0 0 30px rgba(245,197,24,0.3), 0 0 60px rgba(123,45,139,0.3); }
+      to   { box-shadow: 0 0 60px rgba(224,57,158,0.5), 0 0 100px rgba(245,197,24,0.3); }
+    }
+
+    /* Three faces row */
+    .faces-row {
+      display: flex; justify-content: center; gap: 20px;
+      margin-bottom: 16px;
     }
     .face-ring {
       display: inline-block;
-      width: 110px; height: 110px;
-      border-radius: 50%;
-      padding: 4px;
+      width: 100px; height: 100px;
+      border-radius: 50%; padding: 3px; flex-shrink: 0;
       background: linear-gradient(90deg, var(--gold), var(--pink), var(--purple), var(--orange), var(--gold));
       background-size: 300% 100%;
       animation: gradShift 2s linear infinite, faceSpin 3s ease-in-out infinite;
-      box-shadow: 0 0 30px rgba(245,197,24,0.6), 0 0 60px rgba(224,57,158,0.4);
+      box-shadow: 0 0 24px rgba(245,197,24,0.6), 0 0 50px rgba(224,57,158,0.4);
     }
+    .face-ring:nth-child(2) { animation-delay: -1s, -1s; }
+    .face-ring:nth-child(3) { animation-delay: -2s, -2s; }
     @keyframes faceSpin {
       0%   { transform: rotate(-15deg) scale(1); }
       25%  { transform: rotate(15deg) scale(1.08); }
@@ -93,129 +86,72 @@
       100% { transform: rotate(-15deg) scale(1); }
     }
     .face-img {
-      width: 100%; height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      object-position: center top;
-      display: block;
-    }
-
-    .card {
-      max-width: 720px;
-      width: 100%;
-      background: linear-gradient(145deg, #2d0050, #1a0030);
-      border-radius: 24px;
-      padding: 36px 32px;
-      position: relative;
-      animation: borderGlow 2s ease-in-out infinite alternate;
-    }
-    .card::before {
-      content: '';
-      position: absolute; inset: -3px;
-      border-radius: 26px;
-      background: linear-gradient(90deg, var(--gold), var(--pink), var(--purple), var(--orange), var(--gold));
-      background-size: 300% 100%;
-      animation: gradShift 3s linear infinite;
-      z-index: -1;
-    }
-    @keyframes gradShift {
-      from { background-position: 0% 50%; }
-      to   { background-position: 300% 50%; }
-    }
-    @keyframes borderGlow {
-      from { box-shadow: 0 0 30px rgba(245,197,24,0.3), 0 0 60px rgba(123,45,139,0.3); }
-      to   { box-shadow: 0 0 60px rgba(224,57,158,0.5), 0 0 100px rgba(245,197,24,0.3); }
+      width: 100%; height: 100%; border-radius: 50%;
+      object-fit: cover; object-position: center top; display: block;
     }
 
     h1 {
-      font-size: 30px;
-      color: var(--gold);
+      font-size: 30px; color: var(--gold);
       text-shadow: 0 0 10px var(--gold), 0 0 30px var(--orange);
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px;
       animation: flicker 4s ease-in-out infinite;
     }
     @keyframes flicker {
-      0%,100% { opacity: 1; }
-      92% { opacity: 1; } 93% { opacity: 0.4; } 94% { opacity: 1; } 96% { opacity: 0.6; } 97% { opacity: 1; }
+      0%,100%{opacity:1} 92%{opacity:1} 93%{opacity:0.4} 94%{opacity:1} 96%{opacity:0.6} 97%{opacity:1}
     }
+    p { font-size: 20px; color: var(--cream); line-height: 1.5; margin-bottom: 20px; text-shadow: 0 0 8px rgba(245,197,24,0.3); }
 
-    p {
-      font-size: 20px;
-      color: var(--cream);
-      line-height: 1.5;
-      margin-bottom: 20px;
-      text-shadow: 0 0 8px rgba(245,197,24,0.3);
-    }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
 
-    #colorBtn {
-      padding: 14px 32px;
-      border-radius: 50px;
-      border: none;
-      background: linear-gradient(135deg, var(--gold), var(--orange));
-      color: #1a0030;
-      font-family: 'Righteous', sans-serif;
-      font-size: 17px;
-      cursor: pointer;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      box-shadow: 0 0 20px rgba(245,197,24,0.5);
-      transition: transform 0.15s;
-      margin-bottom: 18px;
-      animation: btnPulse 1.8s ease-in-out infinite;
+    button {
+      padding: 14px 28px; border-radius: 50px; border: none;
+      font-family: 'Righteous', sans-serif; font-size: 16px;
+      cursor: pointer; letter-spacing: 1px; text-transform: uppercase;
+      transition: transform 0.15s; animation: btnPulse 1.8s ease-in-out infinite;
     }
-    #colorBtn:hover { transform: scale(1.1); }
+    button:hover { transform: scale(1.08); }
     @keyframes btnPulse {
-      0%,100% { box-shadow: 0 0 20px rgba(245,197,24,0.5); }
-      50%      { box-shadow: 0 0 45px rgba(224,57,158,0.9); }
+      0%,100%{ box-shadow: 0 0 20px rgba(245,197,24,0.5); }
+      50%    { box-shadow: 0 0 45px rgba(224,57,158,0.9); }
     }
+    #shotBtn {
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      color: #1a0030; flex: 1;
+    }
+    #colorBtn {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      color: #fff; flex: 1;
+    }
+
+    /* Hidden video — fades in */
+    .video-wrap {
+      display: none; opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .video-wrap.visible { display: block; }
+    .video-wrap.faded  { opacity: 1; }
 
     .video {
-      position: relative;
-      padding-top: 56.25%;
-      border-radius: 16px;
-      overflow: hidden;
+      position: relative; padding-top: 56.25%;
+      border-radius: 16px; overflow: hidden;
       border: 3px solid var(--gold);
       box-shadow: 0 0 30px rgba(245,197,24,0.4);
-      transition: border-color 0.4s;
     }
     iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
-    .hint {
-      margin-top: 14px;
-      font-size: 13px;
-      color: var(--pink);
-      text-align: center;
-      letter-spacing: 1px;
-      opacity: 0.85;
-    }
+    .hint { margin-top: 14px; font-size: 13px; color: var(--pink); text-align: center; letter-spacing: 1px; opacity: 0.85; }
 
     .stripes {
-      margin-top: 24px;
-      height: 8px;
-      border-radius: 4px;
+      margin-top: 24px; height: 8px; border-radius: 4px;
       background: repeating-linear-gradient(90deg,
-        var(--gold) 0px, var(--gold) 16px,
-        var(--orange) 16px, var(--orange) 32px,
-        var(--pink) 32px, var(--pink) 48px,
-        var(--purple) 48px, var(--purple) 64px
-      );
+        var(--gold) 0px,var(--gold) 16px, var(--orange) 16px,var(--orange) 32px,
+        var(--pink) 32px,var(--pink) 48px, var(--purple) 48px,var(--purple) 64px);
       background-size: 200% 100%;
       animation: stripeMove 1.5s linear infinite;
     }
-    @keyframes stripeMove {
-      from { background-position: 0 0; }
-      to   { background-position: 100% 0; }
-    }
+    @keyframes stripeMove { from{background-position:0 0} to{background-position:100% 0} }
 
-    #flash {
-      position: fixed; inset: 0;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.1s;
-      z-index: 999;
-    }
+    #flash { position: fixed; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.1s; z-index: 999; }
   </style>
 </head>
 <body>
@@ -224,110 +160,99 @@
 <div id="flash"></div>
 
 <div class="card">
-  <div class="face-wrap">
-    <div class="face-ring">
-      <!-- Lägg en bild i repots root som heter matte.jpg (eller matte.png) -->
-      <img
-        id="faceImg"
-        class="face-img"
-        src="matte.jpg"
-        alt="face"
-        onerror="this.onerror=null; this.src='matte.png';"
-      />
-    </div>
+  <div class="faces-row">
+    <div class="face-ring"><img class="face-img" id="imgMatte" src="matte.jpg" onerror="this.src='matte.png'" alt="Matte"/></div>
+    <div class="face-ring"><img class="face-img" id="imgVilma" src="vilma.jpg" onerror="this.src='vilma.png'" alt="Vilma"/></div>
+    <div class="face-ring"><img class="face-img" id="imgAlex"  src="alex.jpg"  onerror="this.src='alex.png'"  alt="Alex"/></div>
   </div>
 
   <h1>🪩 RICKEDYROLL!</h1>
   <p>NU TA EN SHOT!! 🥃🔥</p>
 
-  <div>
-    <button id="colorBtn">TRYCK PÅ MIG!</button>
+  <div class="btn-row">
+    <button id="shotBtn"> TRYCK PÅ MIG FÖR SURPRISE</button>
   </div>
 
-  <div class="video" id="videoBox">
-    <iframe
-      id="player"
-      src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=1&playsinline=1"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen
-    ></iframe>
+  <div class="video-wrap" id="videoWrap">
+    <div class="video">
+      <iframe id="player" src="" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="hint">🕺 Skål! 🕺</div>
   </div>
 
-  <div class="hint">🕺 Skål! 🕺</div>
   <div class="stripes"></div>
 </div>
 
 <script>
-  // Color palettes
-  const palettes = [
-    { bg: '#1a0030', a: '#f5c518', b: '#e8630a', c: '#e0399e', btn: 'linear-gradient(135deg,#f5c518,#e8630a)', flash: 'rgba(245,197,24,0.3)' },
-    { bg: '#003020', a: '#00ff99', b: '#00c853', c: '#b2ff59', btn: 'linear-gradient(135deg,#00ff99,#00c853)', flash: 'rgba(0,255,100,0.3)' },
-    { bg: '#001a40', a: '#00cfff', b: '#0077ff', c: '#a64dff', btn: 'linear-gradient(135deg,#00cfff,#0077ff)', flash: 'rgba(0,180,255,0.3)' },
-    { bg: '#3a0010', a: '#ff2d55', b: '#ff6b00', c: '#ffcc00', btn: 'linear-gradient(135deg,#ff2d55,#ff6b00)', flash: 'rgba(255,50,80,0.35)' },
-    { bg: '#1a1a00', a: '#ffe600', b: '#ff9900', c: '#ff00cc', btn: 'linear-gradient(135deg,#ffe600,#ff9900)', flash: 'rgba(255,200,0,0.35)' },
-  ];
-  let pi = 0;
+// --- Shot button: reveal video with sound ---
+let videoStarted = false;
+document.getElementById('shotBtn').addEventListener('click', () => {
+  if (!videoStarted) {
+    videoStarted = true;
+    const wrap = document.getElementById('videoWrap');
+    const iframe = document.getElementById('player');
+    iframe.src = "https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=0&playsinline=1";
+    wrap.classList.add('visible');
+    requestAnimationFrame(() => requestAnimationFrame(() => wrap.classList.add('faded')));
+    document.getElementById('shotBtn').textContent = '🥃 SKÅL!!';
+    spawnBurst('#f5c518','#e0399e');
+    bigFlash('rgba(245,197,24,0.4)');
+  }
+});
 
-  // 🔊 Slå på ljud bara första gången man trycker
-  let soundOn = false;
-  const iframe = document.getElementById('player');
+// --- Color palettes ---
+const palettes = [
+  { bg:'#1a0030', a:'#f5c518', b:'#e8630a', c:'#e0399e', btn:'linear-gradient(135deg,#f5c518,#e8630a)', flash:'rgba(245,197,24,0.3)' },
+  { bg:'#003020', a:'#00ff99', b:'#00c853', c:'#b2ff59', btn:'linear-gradient(135deg,#00ff99,#00c853)', flash:'rgba(0,255,100,0.3)' },
+  { bg:'#001a40', a:'#00cfff', b:'#0077ff', c:'#a64dff', btn:'linear-gradient(135deg,#00cfff,#0077ff)', flash:'rgba(0,180,255,0.3)' },
+  { bg:'#3a0010', a:'#ff2d55', b:'#ff6b00', c:'#ffcc00', btn:'linear-gradient(135deg,#ff2d55,#ff6b00)', flash:'rgba(255,50,80,0.35)' },
+  { bg:'#1a1a00', a:'#ffe600', b:'#ff9900', c:'#ff00cc', btn:'linear-gradient(135deg,#ffe600,#ff9900)', flash:'rgba(255,200,0,0.35)' },
+];
+let pi = 0;
+document.getElementById('colorBtn').addEventListener('click', () => {
+  pi = (pi + 1) % palettes.length;
+  const p = palettes[pi];
+  document.body.style.background = p.bg;
+  document.documentElement.style.setProperty('--gold', p.a);
+  document.documentElement.style.setProperty('--orange', p.b);
+  document.documentElement.style.setProperty('--pink', p.c);
+  document.getElementById('shotBtn').style.background = p.btn;
+  bigFlash(p.flash);
+  spawnBurst(p.a, p.c);
+});
 
-  document.getElementById('colorBtn').addEventListener('click', () => {
-    pi = (pi + 1) % palettes.length;
-    const p = palettes[pi];
+function bigFlash(color) {
+  const fl = document.getElementById('flash');
+  fl.style.background = color; fl.style.opacity = '1';
+  setTimeout(() => fl.style.opacity = '0', 130);
+}
 
-    // Färger
-    document.body.style.background = p.bg;
-    document.documentElement.style.setProperty('--gold', p.a);
-    document.documentElement.style.setProperty('--orange', p.b);
-    document.documentElement.style.setProperty('--pink', p.c);
-    document.getElementById('colorBtn').style.background = p.btn;
-
-    // Flash!
-    const fl = document.getElementById('flash');
-    fl.style.background = p.flash;
-    fl.style.opacity = '1';
-    setTimeout(() => fl.style.opacity = '0', 120);
-
-    // Burst sparkles
-    spawnBurst(p.a, p.c);
-
-    // 🔊 Starta med ljud (pålitligt) på första klicket
-    if (!soundOn) {
-      soundOn = true;
-      iframe.src = "https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=0&playsinline=1";
-      // Om du vill ändra knapptext efter att ljudet är på:
-      // document.getElementById('colorBtn').textContent = "FÄRGBOMB!";
-    }
-  });
-
-  // Sparkles
-  const container = document.getElementById('sparkles');
-  const colors = ['#f5c518','#e8630a','#e0399e','#7b2d8b','#fff','#a8edea'];
-  for (let i = 0; i < 40; i++) {
+// --- Sparkles ---
+const container = document.getElementById('sparkles');
+const colors = ['#f5c518','#e8630a','#e0399e','#7b2d8b','#fff','#a8edea'];
+for (let i = 0; i < 40; i++) {
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.style.left = Math.random()*100+'vw';
+  s.style.width = s.style.height = (Math.random()*6+3)+'px';
+  s.style.background = colors[Math.floor(Math.random()*colors.length)];
+  s.style.animationDuration = (Math.random()*6+4)+'s';
+  s.style.animationDelay = (Math.random()*8)+'s';
+  container.appendChild(s);
+}
+function spawnBurst(c1, c2) {
+  for (let i = 0; i < 20; i++) {
     const s = document.createElement('div');
     s.className = 'sparkle';
-    s.style.left = Math.random() * 100 + 'vw';
-    s.style.width = s.style.height = (Math.random() * 6 + 3) + 'px';
-    s.style.background = colors[Math.floor(Math.random() * colors.length)];
-    s.style.animationDuration = (Math.random() * 6 + 4) + 's';
-    s.style.animationDelay = (Math.random() * 8) + 's';
+    s.style.left = Math.random()*100+'vw';
+    s.style.width = s.style.height = (Math.random()*10+5)+'px';
+    s.style.background = Math.random()>0.5 ? c1 : c2;
+    s.style.animationDuration = (Math.random()*2+1.5)+'s';
+    s.style.animationDelay = '0s';
     container.appendChild(s);
+    setTimeout(() => s.remove(), 3500);
   }
-
-  function spawnBurst(c1, c2) {
-    for (let i = 0; i < 20; i++) {
-      const s = document.createElement('div');
-      s.className = 'sparkle';
-      s.style.left = Math.random() * 100 + 'vw';
-      s.style.width = s.style.height = (Math.random() * 10 + 5) + 'px';
-      s.style.background = Math.random() > 0.5 ? c1 : c2;
-      s.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
-      s.style.animationDelay = '0s';
-      container.appendChild(s);
-      setTimeout(() => s.remove(), 3500);
-    }
-  }
+}
 </script>
 </body>
 </html>
