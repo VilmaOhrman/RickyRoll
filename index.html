@@ -1,48 +1,270 @@
 <!doctype html>
 <html lang="sv">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Viktig info</title>
-    <style>
-      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 24px; }
-      .card { max-width: 720px; margin: 0 auto; }
-      h1 { font-size: 28px; margin: 0 0 8px; }
-      p { font-size: 18px; line-height: 1.4; margin: 0 0 16px; }
-      .video { position: relative; padding-top: 56.25%; border-radius: 16px; overflow: hidden; }
-      iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-      .hint { opacity: .7; font-size: 14px; margin-top: 10px; }
-      button { padding: 10px 14px; border-radius: 12px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
-    </style>
-  </head>
-  <body>
-    <div class="card">
-      <h1>⚠️ VIKTIGT MEDDELANDE</h1>
-      <p>RICKEDY ROLLL - NU TA EN SHOT!</p>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Viktig info</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');
 
-      <div style="margin: 12px 0 12px;">
-        <button id="playBtn">Starta videon</button>
-      </div>
+    :root {
+      --gold: #f5c518;
+      --orange: #e8630a;
+      --pink: #e0399e;
+      --purple: #7b2d8b;
+      --cream: #fdf3dc;
+    }
 
-      <div class="video">
-        <iframe
-          id="player"
-          src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=1&playsinline=1"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-      <div class="hint">Om den inte startar automatiskt: tryck på “Starta videon”.</div>
+    body {
+      font-family: 'Righteous', system-ui, sans-serif;
+      background: #1a0030;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Spinning disco ball rays */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50vh;
+      left: 50%;
+      width: 4px;
+      height: 200vh;
+      background: linear-gradient(transparent 0%, rgba(245,197,24,0.15) 40%, rgba(245,197,24,0.4) 50%, rgba(245,197,24,0.15) 60%, transparent 100%);
+      transform-origin: 50% 100%;
+      animation: rays 3s linear infinite;
+      pointer-events: none;
+      filter: blur(2px);
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      top: -50vh;
+      left: 50%;
+      width: 4px;
+      height: 200vh;
+      background: linear-gradient(transparent 0%, rgba(224,57,158,0.2) 40%, rgba(224,57,158,0.5) 50%, rgba(224,57,158,0.2) 60%, transparent 100%);
+      transform-origin: 50% 100%;
+      animation: rays 3s linear infinite reverse;
+      animation-delay: -1.5s;
+      pointer-events: none;
+      filter: blur(3px);
+    }
+    @keyframes rays {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Floating sparkles */
+    .sparkles {
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .sparkle {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      animation: floatUp linear infinite;
+      opacity: 0;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 1; }
+      100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+    }
+
+    /* Disco ball */
+    .discoball-wrap {
+      text-align: center;
+      margin-bottom: 4px;
+    }
+    .discoball {
+      font-size: 64px;
+      display: inline-block;
+      animation: spin 2s linear infinite;
+      filter: drop-shadow(0 0 16px var(--gold));
+    }
+    @keyframes spin {
+      from { transform: rotate(-10deg); }
+      50%  { transform: rotate(10deg); }
+      to   { transform: rotate(-10deg); }
+    }
+
+    .card {
+      max-width: 720px;
+      width: 100%;
+      background: linear-gradient(145deg, #2d0050, #1a0030);
+      border: 3px solid transparent;
+      border-radius: 24px;
+      padding: 36px 32px;
+      position: relative;
+      box-shadow: 0 0 40px rgba(245,197,24,0.3), 0 0 80px rgba(123,45,139,0.4);
+      animation: borderGlow 2s ease-in-out infinite alternate;
+    }
+    @keyframes borderGlow {
+      from { box-shadow: 0 0 30px rgba(245,197,24,0.3), 0 0 60px rgba(123,45,139,0.3); }
+      to   { box-shadow: 0 0 60px rgba(224,57,158,0.5), 0 0 100px rgba(245,197,24,0.3); }
+    }
+
+    /* Groovy border via pseudo */
+    .card::before {
+      content: '';
+      position: absolute; inset: -3px;
+      border-radius: 26px;
+      background: linear-gradient(90deg, var(--gold), var(--pink), var(--purple), var(--orange), var(--gold));
+      background-size: 300% 100%;
+      animation: gradShift 3s linear infinite;
+      z-index: -1;
+    }
+    @keyframes gradShift {
+      from { background-position: 0% 50%; }
+      to   { background-position: 300% 50%; }
+    }
+
+    h1 {
+      font-size: 30px;
+      color: var(--gold);
+      text-shadow: 0 0 10px var(--gold), 0 0 30px var(--orange);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      animation: flicker 4s ease-in-out infinite;
+    }
+    @keyframes flicker {
+      0%,100% { opacity: 1; }
+      92%      { opacity: 1; }
+      93%      { opacity: 0.5; }
+      94%      { opacity: 1; }
+      96%      { opacity: 0.7; }
+      97%      { opacity: 1; }
+    }
+
+    p {
+      font-size: 18px;
+      color: var(--cream);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px rgba(245,197,24,0.3);
+    }
+
+    button {
+      padding: 12px 28px;
+      border-radius: 50px;
+      border: none;
+      background: linear-gradient(135deg, var(--gold), var(--orange));
+      color: #1a0030;
+      font-family: 'Righteous', sans-serif;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      box-shadow: 0 0 20px rgba(245,197,24,0.5);
+      transition: transform 0.15s, box-shadow 0.15s;
+      margin-bottom: 16px;
+      animation: pulse 1.8s ease-in-out infinite;
+    }
+    button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 35px rgba(245,197,24,0.9);
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 20px rgba(245,197,24,0.5); }
+      50%      { box-shadow: 0 0 40px rgba(224,57,158,0.8); }
+    }
+
+    .video {
+      position: relative;
+      padding-top: 56.25%;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 3px solid var(--gold);
+      box-shadow: 0 0 30px rgba(245,197,24,0.4);
+    }
+    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+    .hint {
+      margin-top: 14px;
+      font-size: 13px;
+      color: var(--pink);
+      text-align: center;
+      letter-spacing: 1px;
+      opacity: 0.85;
+    }
+
+    /* Groovy stripes bottom decoration */
+    .stripes {
+      margin-top: 24px;
+      height: 8px;
+      border-radius: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--gold) 0px, var(--gold) 16px,
+        var(--orange) 16px, var(--orange) 32px,
+        var(--pink) 32px, var(--pink) 48px,
+        var(--purple) 48px, var(--purple) 64px
+      );
+      background-size: 200% 100%;
+      animation: stripeMove 1.5s linear infinite;
+    }
+    @keyframes stripeMove {
+      from { background-position: 0 0; }
+      to   { background-position: 100% 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating sparkles -->
+  <div class="sparkles" id="sparkles"></div>
+
+  <div class="card">
+    <div class="discoball-wrap">
+      <span class="discoball">🪩</span>
     </div>
+    <h1>⚠️ VIKTIGT MEDDELANDE</h1>
+    <p>Säg till om du också fått detta fel. Jag tror vi behöver åtgärda det direkt.</p>
+    <div>
+      <button id="playBtn">🎵 Starta videon</button>
+    </div>
+    <div class="video">
+      <iframe
+        id="player"
+        src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=1&playsinline=1"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div class="hint">Om den inte startar automatiskt: tryck på "Starta videon" 🕺</div>
+    <div class="stripes"></div>
+  </div>
 
-    <script>
-      // Om autoplay blockas: knappen laddar om med autoplay igen
-      document.getElementById("playBtn").addEventListener("click", () => {
-        const iframe = document.getElementById("player");
-        const base = "https://www.youtube.com/embed/oHg5SJYRHA0";
-        iframe.src = base + "?autoplay=1&mute=0&playsinline=1";
-      });
-    </script>
-  </body>
+  <script>
+    document.getElementById("playBtn").addEventListener("click", () => {
+      const iframe = document.getElementById("player");
+      iframe.src = "https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=0&playsinline=1";
+    });
+
+    // Generate sparkles
+    const container = document.getElementById('sparkles');
+    const colors = ['#f5c518','#e8630a','#e0399e','#7b2d8b','#fff','#a8edea'];
+    for (let i = 0; i < 40; i++) {
+      const s = document.createElement('div');
+      s.className = 'sparkle';
+      s.style.left = Math.random() * 100 + 'vw';
+      s.style.width = s.style.height = (Math.random() * 6 + 3) + 'px';
+      s.style.background = colors[Math.floor(Math.random() * colors.length)];
+      s.style.animationDuration = (Math.random() * 6 + 4) + 's';
+      s.style.animationDelay = (Math.random() * 8) + 's';
+      container.appendChild(s);
+    }
+  </script>
+</body>
 </html>
