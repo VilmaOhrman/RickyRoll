@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Viktig info</title>
+    <style>
+      body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 24px; }
+      .card { max-width: 720px; margin: 0 auto; }
+      h1 { font-size: 28px; margin: 0 0 8px; }
+      p { font-size: 18px; line-height: 1.4; margin: 0 0 16px; }
+      .video { position: relative; padding-top: 56.25%; border-radius: 16px; overflow: hidden; }
+      iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+      .hint { opacity: .7; font-size: 14px; margin-top: 10px; }
+      button { padding: 10px 14px; border-radius: 12px; border: 1px solid #ccc; background: #fff; cursor: pointer; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>⚠️ VIKTIGT MEDDELANDE</h1>
+      <p>Säg till om du också fått detta fel. Jag tror vi behöver åtgärda det direkt.</p>
+
+      <div style="margin: 12px 0 12px;">
+        <button id="playBtn">Starta videon</button>
+      </div>
+
+      <div class="video">
+        <iframe
+          id="player"
+          src="https://www.youtube.com/embed/oHg5SJYRHA0?autoplay=1&mute=1&playsinline=1"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+
+      <div class="hint">Om den inte startar automatiskt: tryck på “Starta videon”.</div>
+    </div>
+
+    <script>
+      // Om autoplay blockas: knappen laddar om med autoplay igen
+      document.getElementById("playBtn").addEventListener("click", () => {
+        const iframe = document.getElementById("player");
+        const base = "https://www.youtube.com/embed/oHg5SJYRHA0";
+        iframe.src = base + "?autoplay=1&mute=0&playsinline=1";
+      });
+    </script>
+  </body>
+</html>
